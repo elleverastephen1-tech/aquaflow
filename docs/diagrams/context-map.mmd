@@ -1,0 +1,34 @@
+%% AquaFlow context map (M0 draft for Checkpoint A)
+%% Solid arrows = synchronous HTTP. Dotted arrows = asynchronous domain events via RabbitMQ.
+%% Each box lists the entities the service OWNS. "ref:" lists what it only references by ID.
+flowchart LR
+  WEB["<b>Web (Next.js BFF)</b><br/>owns: UI state, session cookie<br/>no domain data"]
+  GW["<b>Gateway</b><br/>routing, JWT pre-check,<br/>rate limit, request IDs<br/>no database"]
+
+  AUTH["<b>Auth</b> · auth_db<br/>User, Role, Refresh session,<br/>Login event, Customer-account link<br/><i>ref: accountId</i>"]
+  CUST["<b>Customer</b> · customer_db<br/>Customer, Service account, Address,<br/>Classification, Zone, Route,<br/>Meter, Meter installation<br/><i>ref: none</i>"]
+  READ["<b>Reading</b> · reading_db<br/>Billing period, Route assignment,<br/>Reading, Estimated reading, Flag,<br/>Review decision, Photo metadata<br/><i>ref: accountId, meterId, routeId, userId</i>"]
+  BILL["<b>Billing</b> · billing_db<br/>Tariff, Tariff version, Bill run,<br/>Bill, Bill line, Ledger entry,<br/>Adjustment, Penalty, Arrears*<br/>consumption read model<br/><i>ref: accountId, periodId, readingId</i>"]
+  PAY["<b>Payment</b> · payment_db<br/>Payment, Checkout attempt,<br/>Provider webhook, Receipt<br/><i>ref: accountId, billId</i>"]
+  NOTIF["<b>Notification</b> · notification_db<br/>Preference, Template,<br/>Delivery record<br/><i>ref: accountId, userId</i>"]
+
+  WEB -->|HTTPS| GW
+  GW -->|HTTP| AUTH
+  GW -->|HTTP| CUST
+  GW -->|HTTP| READ
+  GW -->|HTTP| BILL
+  GW -->|HTTP| PAY
+  GW -->|HTTP| NOTIF
+  AUTH -->|"HTTP: verify account no. + code (M2)"| CUST
+  READ -->|"HTTP: meter/route lookup (M4 only; ADR-0007)"| CUST
+  BILL -->|"HTTP: GET /periods/:id/consumption (M5 only)"| READ
+
+  CUST -.->|"customer.account.opened<br/>customer.account.status-changed<br/>customer.meter.installed<br/>customer.meter.replaced"| READ
+  CUST -.->|"customer.account.opened<br/>customer.account.status-changed<br/>customer.meter.replaced"| BILL
+  READ -.->|"reading.reading.approved<br/>reading.period.closed"| BILL
+  READ -.->|reading.reading.flagged| NOTIF
+  BILL -.->|"billing.bill.issued<br/>billing.bill.overdue<br/>billing.adjustment.posted"| NOTIF
+  BILL -.->|billing.bill.issued| PAY
+  PAY -.->|payment.payment.received| BILL
+  PAY -.->|"payment.payment.received<br/>payment.payment.failed"| NOTIF
+  AUTH -.->|auth.user.registered| NOTIF

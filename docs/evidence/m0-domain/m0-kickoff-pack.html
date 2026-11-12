@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AquaFlow M0 Kickoff</title>
+<style>
+  :root {
+    --bg: #f6f8fa; --surface: #ffffff; --text: #1b2733; --muted: #5b6b7a; --border: #d9e1e8;
+    --accent: #0b7a8a; --accent-soft: #e3f3f5; --warn: #9a5b00; --warn-soft: #fff4e0;
+    --ok: #1d7a46; --ok-soft: #e6f5ec; --bad: #b42318; --code: #eef2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1418; --surface: #172027; --text: #e3eaf0; --muted: #9aabba; --border: #2a3742;
+      --accent: #4cc3d2; --accent-soft: #123139; --warn: #f0b45a; --warn-soft: #33270f;
+      --ok: #5fd08f; --ok-soft: #12301f; --bad: #ff8a80; --code: #1f2a33;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.15rem; margin: 32px 0 10px; }
+  p { margin: 6px 0; }
+  .sub { color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+  .chip { font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--border); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .callout { background: var(--warn-soft); border-left: 4px solid var(--warn); border-radius: 8px; padding: 12px 16px; }
+  .callout h2 { margin-top: 0; color: var(--warn); }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.sum td { font-weight: 600; }
+  tr.total td { font-weight: 700; border-top: 2px solid var(--text); }
+  code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .tabs button { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+  .tabs button[aria-pressed="true"] { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+  .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 6px; }
+  .badge.ok { background: var(--ok-soft); color: var(--ok); }
+  .badge.bad { background: #fde8e6; color: var(--bad); }
+  .badge.open { background: var(--warn-soft); color: var(--warn); }
+  .badge.prop { background: var(--accent-soft); color: var(--accent); }
+  label { font-size: 13px; color: var(--muted); display: block; }
+  input { font: inherit; width: 100%; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .row > div { flex: 1 1 140px; }
+  .mermaid { background: var(--surface); }
+  footer { margin-top: 40px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>AquaFlow · M0 kickoff pack</h1>
+  <p class="sub">Orientation &amp; domain discovery. These drafts are ready for review before Checkpoint A. Prepared 2026-10-27 from the Learning Roadmap v1.0 and the Development Plan.</p>
+  <div class="chips">
+    <span class="chip">13 milestones · ~29 weeks</span><span class="chip">6 services + gateway + web</span>
+    <span class="chip">cards #86–#95</span><span class="chip">repo: local, not pushed</span>
+  </div>
+
+  <h2 id="decisions" style="margin-top:28px">Decisions needed before M1</h2>
+  <div class="callout">
+    <div class="scroll"><table>
+      <tr><th>ID</th><th>Decision</th><th>Why it matters</th><th>Card</th></tr>
+      <tr><td>Q-02</td><td><b>Repo host:</b> Gitea or GitHub/GHCR</td><td>The docs assume GitHub Actions + GHCR, but the team is on Gitea. This changes M9/M10. Nothing is pushed until it is decided.</td><td>#86</td></tr>
+      <tr><td>Q-10</td><td><b>Schedule baseline</b> and start date</td><td>The Roadmap and Dev Plan split the 29 weeks differently (M0 = 1 vs 2 weeks). A start date is needed for card due dates.</td><td>#93</td></tr>
+      <tr><td>Q-11</td><td><b>Mentor</b> for Checkpoints A–F</td><td>Checkpoint A sign-off is part of M0's definition of done.</td><td>#93, #94</td></tr>
+      <tr><td>Q-04</td><td><b>Government tariff</b></td><td>The docs give no rates at all. Needed by M5.</td><td>#93</td></tr>
+    </table></div>
+  </div>
+
+  <h2>What was produced</h2>
+  <div class="card scroll"><table>
+    <tr><th>Deliverable</th><th>File</th><th>Card</th><th>State</th></tr>
+    <tr><td>README, contributing rules, .gitignore, .editorconfig</td><td><code>README.md</code>, <code>CONTRIBUTING.md</code></td><td>#86</td><td><span class="badge open">blocked on Q-02</span></td></tr>
+    <tr><td>Glossary: 80 terms (all 14 §3.1 concepts, rule, identity and technical terms)</td><td><code>docs/glossary.md</code></td><td>#87</td><td><span class="badge prop">needs review</span></td></tr>
+    <tr><td>19 user stories across 4 roles, with permission cross-check</td><td><code>docs/user-stories.md</code></td><td>#88</td><td><span class="badge prop">needs review</span></td></tr>
+    <tr><td>Context map, ownership table, boundary decisions D-1…D-5</td><td><code>docs/architecture.md</code></td><td>#89</td><td><span class="badge prop">needs review</span></td></tr>
+    <tr><td>Billing check: 3 mandatory totals reproduced</td><td><code>docs/evidence/m0-domain/billing-*.{mjs,csv}</code></td><td>#90</td><td><span class="badge ok">verified</span></td></tr>
+    <tr><td>Edge cases: meter replacement (+ rollover), duplicate payment</td><td><code>docs/edge-cases.md</code></td><td>#91</td><td><span class="badge prop">needs review</span></td></tr>
+    <tr><td>ADR template, index of ADR-0001…0020, ADR-0001 (Proposed)</td><td><code>docs/adr/</code></td><td>#92</td><td><span class="badge prop">needs review</span></td></tr>
+    <tr><td>Assumptions log: 30 entries with owner and status</td><td><code>docs/assumptions.md</code></td><td>#93</td><td><span class="badge open">owners TBD</span></td></tr>
+    <tr><td>Event catalog (starter), journal, docs index, evidence folders</td><td><code>docs/event-catalog.md</code>, <code>docs/journal.md</code></td><td>–</td><td><span class="badge ok">done</span></td></tr>
+  </table></div>
+
+  <h2>Context map</h2>
+  <p class="sub">Solid lines are HTTP; dotted lines are events via RabbitMQ (M7+). Each service owns its own database. The same map is on the project canvas.</p>
+  <div class="card scroll"><pre class="mermaid">
+flowchart LR
+  WEB([Web / BFF]) -->|HTTPS| GW[API Gateway]
+  GW --> AUTH[Auth<br/>users · roles · account links]
+  GW --> CUST[Customer<br/>customers · accounts · meters · zones · routes]
+  GW --> READ[Reading<br/>periods · route assignments · readings]
+  GW --> BILL[Billing<br/>tariffs · bills · ledger]
+  GW --> PAY[Payment<br/>payments · receipts]
+  GW --> NOTIF[Notification<br/>preferences · deliveries]
+  AUTH -->|verify account M2| CUST
+  READ -->|meter lookup M4| CUST
+  CUST -.->|customer.meter.*| READ
+  READ -.->|reading.approved / period.closed| BILL
+  READ -.->|reading.flagged| NOTIF
+  BILL -.->|bill.issued| PAY
+  BILL -.->|bill.issued / overdue| NOTIF
+  PAY -.->|payment.received| BILL
+  PAY -.->|payment.received| NOTIF
+  </pre></div>
+
+  <div class="grid" style="margin-top:12px">
+    <div class="card"><b>D-1 Routes</b><p>Customer owns zones and routes. Reading owns route assignments. The Dev Plan's <code>route_assignments</code> in customer_db is treated as a defect.</p></div>
+    <div class="card"><b>D-2 Previous reading</b><p>Reading owns it. Customer only sends the initial and final readings captured at install and replace.</p></div>
+    <div class="card"><b>D-3 Meter data in Reading</b><p>Sync call in M4, then a read model from <code>customer.*</code> events in M7 (ADR-0007, likely reversed).</p></div>
+  </div>
+
+  <h2>Billing check: the three mandatory totals</h2>
+  <p class="sub">Residential tariff 2026-01 in integer cents. Each percentage line is rounded half-up on its own. The same maths is in <code>billing-check.mjs</code>.</p>
+  <div class="card">
+    <div class="tabs" role="group" aria-label="Billing case">
+      <button type="button" data-case="0" aria-pressed="true">37 m³ + $500 arrears</button>
+      <button type="button" data-case="1" aria-pressed="false">6 m³</button>
+      <button type="button" data-case="2" aria-pressed="false">55 m³</button>
+      <button type="button" data-case="3" aria-pressed="false">Try your own</button>
+    </div>
+    <div id="custom" class="row" hidden>
+      <div><label for="m3">Consumption (m³)</label><input id="m3" type="number" min="0" step="1" value="25"></div>
+      <div><label for="arr">Overdue arrears ($)</label><input id="arr" type="number" min="0" step="0.01" value="0"></div>
+    </div>
+    <div class="scroll"><table id="bill"></table></div>
+    <p id="verdict" style="margin-top:10px"></p>
+  </div>
+
+  <h2>Most important open questions</h2>
+  <div class="card scroll"><table>
+    <tr><th>ID</th><th>Question</th><th>Proposal</th><th>Status</th></tr>
+    <tr><td>Q-05</td><td>The penalty is "applied 3 days after due", but shows on the next bill</td><td>A daily job posts one penalty ledger entry; the next bill displays it</td><td><span class="badge prop">proposed</span></td></tr>
+    <tr><td>Q-06</td><td>R6 estimate with fewer than 3 periods of history</td><td>Average what exists; with no history use a 15 m³ default and flag it</td><td><span class="badge open">open</span></td></tr>
+    <tr><td>Q-07</td><td>R2 when the 3-period average is 0</td><td>Flag if consumption &gt; 10 m³</td><td><span class="badge open">open</span></td></tr>
+    <tr><td>Q-13</td><td>Rollover vs misread look identical</td><td>Rollover only if previous is in the top 10% of range and usage is plausible</td><td><span class="badge open">open</span></td></tr>
+    <tr><td>Q-09</td><td>Dev Plan DB defects: payment_db listed twice, no notification_db, no inbox tables</td><td>Add notification_db tables and an <code>inbox_events</code> table per consumer</td><td><span class="badge prop">proposed</span></td></tr>
+    <tr><td>Q-03</td><td>Maintenance fee for meters other than ½"</td><td>Fee table by size in tariff data (placeholder values)</td><td><span class="badge open">open</span></td></tr>
+  </table></div>
+  <p class="sub" style="margin-top:8px">The full list (30 entries) is in <code>docs/assumptions.md</code>.</p>
+
+  <footer>Next step: review the drafts on cards #87–#92, settle the four decisions above, then hold Checkpoint A (#94).</footer>
+</main>
+
+<script>
+  // Integer-cent bill maths, mirroring docs/evidence/m0-domain/billing-check.mjs
+  const BLOCKS = [[11, 20, 3000], [21, 30, 3500], [31, 40, 4200], [41, Infinity, 5000]];
+  const pct = (a, bp) => Math.floor((a * bp + 5000) / 10000);
+  const fmt = (c) => (c / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const CASES = [
+    { m3: 37, arrears: 50000, expected: 203781 },
+    { m3: 6, arrears: 0, expected: 32480 },
+    { m3: 55, arrears: 0, expected: 256704 },
+  ];
+
+  function compute(m3, arrears) {
+    const rows = [['Minimum charge (first 10 m³)', 'flat', 25000]];
+    let basic = 25000;
+    for (const [from, to, rate] of BLOCKS) {
+      const used = Math.max(0, Math.min(m3, to) - from + 1);
+      if (!used) continue;
+      rows.push([`Block ${from}–${Math.min(m3, to)} m³`, `${used} m³ × ${fmt(rate)}`, used * rate]);
+      basic += used * rate;
+    }
+    rows.push(['Basic charge', '', basic, 'sum']);
+    const env = pct(basic, 1000);
+    rows.push(['Environmental fee', `10% × ${fmt(basic)}`, env]);
+    rows.push(['Meter maintenance (½")', 'flat', 1500]);
+    const sub = basic + env + 1500;
+    rows.push(['Subtotal', '', sub, 'sum']);
+    const vat = pct(sub, 1200);
+    rows.push(['VAT', `12% × ${fmt(sub)}, half-up`, vat]);
+    let total = sub + vat;
+    rows.push(['Current charges', '', total, 'sum']);
+    if (arrears > 0) {
+      const pen = pct(arrears, 1000);
+      rows.push(['Arrears', 'carried forward', arrears]);
+      rows.push(['Late payment penalty', `10% × ${fmt(arrears)}`, pen]);
+      total += arrears + pen;
+    }
+    rows.push(['TOTAL AMOUNT DUE', '', total, 'total']);
+    return { rows, total };
+  }
+
+  const table = document.getElementById('bill');
+  const verdict = document.getElementById('verdict');
+  const custom = document.getElementById('custom');
+  let current = 0;
+
+  function render() {
+    let m3, arrears, expected;
+    if (current < 3) ({ m3, arrears, expected } = CASES[current]);
+    else {
+      m3 = Math.max(0, Math.floor(Number(document.getElementById('m3').value) || 0));
+      arrears = Math.max(0, Math.round((Number(document.getElementById('arr').value) || 0) * 100));
+    }
+    const { rows, total } = compute(m3, arrears);
+    table.innerHTML = '<tr><th>Line</th><th>Calculation</th><th class="num">Amount ($)</th></tr>' +
+      rows.map(([l, c, a, k]) => `<tr class="${k || ''}"><td>${l}</td><td>${c}</td><td class="num">${fmt(a)}</td></tr>`).join('');
+    verdict.innerHTML = expected === undefined
+      ? '<span class="sub">Your own case: there is no expected value to compare against.</span>'
+      : (total === expected
+        ? `<span class="badge ok">MATCH</span> Expected $${fmt(expected)}, computed $${fmt(total)}`
+        : `<span class="badge bad">MISMATCH</span> Expected $${fmt(expected)}, computed $${fmt(total)}`);
+  }
+
+  document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+    current = Number(b.dataset.case);
+    document.querySelectorAll('.tabs button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    custom.hidden = current !== 3;
+    render();
+  }));
+  ['m3', 'arr'].forEach((id) => document.getElementById(id).addEventListener('input', render));
+  render();
+</script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+  const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  mermaid.initialize({ startOnLoad: true, theme: dark ? 'dark' : 'default', flowchart: { htmlLabels: true } });
+</script>
+</body>
+</html>
